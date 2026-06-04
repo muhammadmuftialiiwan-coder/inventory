@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Services\ItemService;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Http\Controllers\Api\BaseController;
 
-class ItemController extends Controller
+class ItemController extends BaseController
 {
     protected ItemService $svc;
 

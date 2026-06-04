@@ -1,0 +1,8 @@
+workspace:
+  id: 0d6e4f67-ce01-4273-812a-e05c36b05d10
+localResources:
+  collections:
+    - ../postman/collections/register modul4
+cloudResources:
+  collections:
+    ../postman/collections/register modul4: 54986271-00575f55-6b59-4c50-9b2c-edbd79cd9380

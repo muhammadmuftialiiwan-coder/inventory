@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Services\CategoryService;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Controllers\Api\BaseController;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     protected CategoryService $svc;
 

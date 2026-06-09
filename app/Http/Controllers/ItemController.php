@@ -18,64 +18,63 @@ class ItemController extends BaseController
 
     public function index()
     {
-        return response()->json([
-            'status' => 'success',
-            'data' => $this->svc->all(),
-            'message' => 'Berhasil menarik semua data Item'
-        ]);
+        return $this->success(
+            $this->svc->all(),
+            'Berhasil menarik semua data Item'
+        );
     }
 
     public function store(StoreItemRequest $req)
     {
         $item = $this->svc->create($req->validated());
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $item,
-            'message' => 'Item berhasil dibuat'
-        ], 201);
+        return $this->success(
+            $item,
+            'Item berhasil dibuat',
+            201
+        );
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         try {
+
             $item = $this->svc->find($id);
 
-            return response()->json([
-                'status' => 'success',
-                'data' => $item,
-                'message' => 'Berhasil menarik satu data Item'
-            ]);
+            return $this->success(
+                $item,
+                'Berhasil menarik satu data Item'
+            );
 
         } catch (\Exception $e) {
 
-            return response()->json([
-                'status' => 'error',
-                'data' => null,
-                'message' => $e->getMessage()
-            ], 404);
+            return $this->error(
+                $e->getMessage(),
+                404
+            );
         }
     }
 
     public function update(UpdateItemRequest $req, $id)
     {
-        $item = $this->svc->update($id, $req->validated());
+        $item = $this->svc->update(
+            $id,
+            $req->validated()
+        );
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $item,
-            'message' => 'Item berhasil diperbarui'
-        ]);
+        return $this->success(
+            $item,
+            'Item berhasil diperbarui'
+        );
     }
 
     public function destroy($id)
     {
         $this->svc->delete($id);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => null,
-            'message' => 'Item berhasil dihapus'
-        ], 204);
+        return $this->success(
+            null,
+            'Item berhasil dihapus'
+        );
     }
 }

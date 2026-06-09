@@ -11,6 +11,13 @@ class UpdateItemRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => strip_tags(trim($this->name)),
+        ]);
+    }
+
     public function rules()
     {
         return [
@@ -24,7 +31,10 @@ class UpdateItemRequest extends FormRequest
     public function messages()
     {
         return [
-            'sometimes.required' => 'Field ini diperlukan saat diubah.',
+            'name.required' => 'Nama item wajib diisi.',
+            'quantity.integer' => 'Jumlah harus angka bulat.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'category_id.exists' => 'Kategori tidak ditemukan.',
         ];
     }
 }

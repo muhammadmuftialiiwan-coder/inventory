@@ -2,41 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CategoryController;
 
-/*
-|--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
+Route::prefix('v1')->group(function () {
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 
-/*
-|--------------------------------------------------------------------------
-| Protected Routes
-|--------------------------------------------------------------------------
-*/
+    Route::middleware('auth:sanctum')->group(function () {
 
-Route::middleware('auth:sanctum')->group(function () {
+        Route::apiResource('items', ItemController::class);
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+        Route::apiResource('categories', CategoryController::class);
 
-    Route::apiResource('categories', CategoryController::class)
-        ->except(['destroy']);
-
-    Route::delete(
-        'categories/{category}',
-        [CategoryController::class, 'destroy']
-    )->middleware('role:admin');
-
-    Route::apiResource('items', ItemController::class)
-        ->except(['destroy']);
-
-    Route::delete(
-        'items/{item}',
-        [ItemController::class, 'destroy']
-    )->middleware('role:admin');
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });
 });

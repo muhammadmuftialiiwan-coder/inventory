@@ -11,12 +11,24 @@ class UpdateCategoryRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => strip_tags(trim($this->name)),
+        ]);
+    }
+
     public function rules()
     {
-        $id = $this->route('category');
-
         return [
-            'name' => "required|string|unique:categories,name,{$id}"
+            'name' => 'sometimes|required|string|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama kategori wajib diisi.',
         ];
     }
 }

@@ -11,6 +11,13 @@ class StoreItemRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => strip_tags(trim($this->name)),
+        ]);
+    }
+
     public function rules()
     {
         return [

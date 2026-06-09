@@ -6,20 +6,25 @@ use App\Http\Controllers\Controller;
 
 class BaseController extends Controller
 {
-    protected function success($data = null, $message = null, $code = 200)
-    {
+    protected function success(
+        $data = null,
+        $message = 'Success',
+        $code = 200
+    ) {
         return response()->json([
             'success' => true,
-            'data' => $data,
             'message' => $message,
+            'data' => $data
         ], $code);
     }
 
-    protected function error($message = null, $code = 400)
-    {
+    protected function error(
+        $message = 'Error',
+        $code = 400
+    ) {
         return response()->json([
             'success' => false,
-            'message' => $message,
+            'message' => $message
         ], $code);
     }
 }

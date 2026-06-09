@@ -6,8 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Api\BaseController;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     public function register(Request $request)
     {
@@ -26,14 +27,14 @@ class AuthController extends Controller
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json([
-            'status' => 'success',
-            'data' => [
+        return $this->success(
+            [
                 'user' => $user,
                 'token' => $token
             ],
-            'message' => 'User registered'
-        ], 201);
+            'User registered',
+            201
+        );
     }
 
     public function login(Request $request)
@@ -46,22 +47,33 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.']
-            ]);
+
+            return $this->error(
+                'The provided credentials are incorrect.',
+                401
+            );
         }
 
         $user->tokens()->delete();
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json([
-            'status' => 'success',
-            'data' => [
+        return $this->success(
+            [
                 'user' => $user,
                 'token' => $token
             ],
-            'message' => 'User logged in'
-        ]);
+            'User logged in'
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return $this->success(
+            null,
+            'User logged out'
+        );
     }
 }

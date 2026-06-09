@@ -18,3 +18,76 @@ Base URL: http://localhost:8000/api/v1
 * **GET /items/{id}** - Melihat detail satu item barang.
 * **PUT /items/{id}** - Memperbarui data spesifik item.
 * **DELETE /items/{id}** - Menghapus item barang (Khusus Admin).
+
+# Inventory API Documentation
+
+## Register
+
+POST /api/v1/register
+
+### Body
+
+```json
+{
+  "name": "Admin",
+  "email": "admin@gmail.com",
+  "password": "password"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Register berhasil",
+  "data": {
+    ...
+  }
+}
+```
+
+---
+
+## Login
+
+POST /api/v1/login
+
+### Body
+
+```json
+{
+  "email": "admin@gmail.com",
+  "password": "password"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Login berhasil",
+  "data": {
+    "token": "..."
+  }
+}
+```
+
+---
+
+## Get Items
+
+GET /api/v1/items
+
+Authorization: Bearer {token}
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Berhasil mengambil data item",
+  "data": []
+}
+```

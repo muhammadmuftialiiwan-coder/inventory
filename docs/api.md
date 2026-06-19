@@ -91,3 +91,18 @@ Authorization: Bearer {token}
   "data": []
 }
 ```
+
+
+# API Documentation
+
+## GET /api/v1/items
+
+Mengambil semua item.
+
+## GET /api/v1/items?category_id={id}
+
+Description:
+Filter item berdasarkan category.
+
+Example:
+GET /api/v1/items?category_id=1

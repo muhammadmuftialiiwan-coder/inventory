@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Services\ItemService;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
@@ -16,10 +17,12 @@ class ItemController extends BaseController
         $this->svc = $svc;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         return $this->success(
-            $this->svc->all(),
+            $this->svc->all(
+                $request->category_id
+            ),
             'Berhasil menarik semua data Item'
         );
     }
